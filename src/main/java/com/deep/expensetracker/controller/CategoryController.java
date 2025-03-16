@@ -6,10 +6,9 @@ import com.deep.expensetracker.service.impl.CategoryServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -26,4 +25,16 @@ public class CategoryController {
         return new ResponseEntity<>(category,HttpStatus.CREATED);
     }
 
+    //Rest API to get category by id
+    @GetMapping("/{id}")
+    private ResponseEntity<CategoryDto> getCategoryById(@PathVariable("id") long categoryId){
+        CategoryDto categoryDto = categoryService.getCategoryById(categoryId);
+        return ResponseEntity.ok(categoryDto);
+    }
+
+    //Rest API to get all the categories
+    @GetMapping("/categories")
+    private ResponseEntity<List<CategoryDto>> getAllCategoreis(){
+        return ResponseEntity.ok(categoryService.getAllCategory());
+    }
 }
