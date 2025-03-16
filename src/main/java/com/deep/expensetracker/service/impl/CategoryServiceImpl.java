@@ -36,6 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    //method to fetch all the categories list from the database
     public List<CategoryDto> getAllCategory() {
         List<Category> categories = categoryRepository.findAll();
 
@@ -44,6 +45,20 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
 
         return categoryDto;
+    }
+
+    @Override
+    //method to update the give category based on id and details
+    public CategoryDto updateCategory(long id, CategoryDto categoryDto) {
+
+        //Get details of category from db at given id
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category with ID don't exists!!!"));
+        category.setName(categoryDto.name());
+
+        Category updatedCategory = categoryRepository.save(category);
+
+        return CategoryMapper.mapToCategoryDto(updatedCategory);
     }
 
 }
