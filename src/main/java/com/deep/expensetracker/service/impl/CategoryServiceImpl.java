@@ -61,4 +61,8 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryMapper.mapToCategoryDto(updatedCategory);
     }
 
+    @Override
+    public void deleteCategory(long id) {
+        categoryRepository.deleteById(id);
+    }
 }
